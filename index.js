@@ -2,8 +2,8 @@ var tls = require('tls');
 var fs = require('fs');
 
 var options = {
-  key: fs.readFileSync('./certs/tlsecho.com.key'),
-  cert: fs.readFileSync('./certs/tlsecho.com.cert')
+  key: fs.readFileSync(__dirname+'/certs/tlsecho.com.key'),
+  cert: fs.readFileSync(__dirname+'/certs/tlsecho.com.cert')
 
   /*// This is necessary only if using the client certificate authentication.
   requestCert: true,
@@ -21,9 +21,11 @@ var server = tls.createServer(options, function(cleartextStream) {
 
 });
 
+exports.server = server;
+
 exports.start = function(port){
   port = port || 8000;
   server.listen(port, function() {
-    console.log('tls echo server started on port port');
+    console.log('tls echo server started on port '+ port);
   });
 }
